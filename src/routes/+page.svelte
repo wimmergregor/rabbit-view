@@ -25,15 +25,21 @@
 <!-- unser Template / HTML-Teil der Seite bzw. der Komponente -->
 <h1 class="text-3xl">Our Rabbits</h1>
 
-<div class="grid w-[200px] grid-cols-[32px_1fr_32px_32px] items-end">
+<div class="grid w-[200px] grid-cols-[32px_1fr_1fr_32px_32px] items-end">
 	<div>Nr.</div>
 	<div>Name</div>
+	<divv>Hasenbau</divv>
 	<div></div>
 	<div></div>
 
-	{#each store.rabbits as rabbit, index}
+	{#each store.rabbits as rabbit, index (rabbit.id)}
 		<div class="pr-3 text-right">{index + 1}</div>
 		<div class="pr-3">{rabbit.name}</div>
+		{#if rabbit.expand.rabbithole}
+			<div class="pr-3">{rabbit.expand.rabbithole.name}</div>
+		{:else}
+			<div></div>
+		{/if}
 		<div class="pr-3">
 			<button
 				onclick={() => {
@@ -56,7 +62,7 @@
 		<h3 class="text-lg font-bold">Edit rabbit with ID {currentRabbitId}</h3>
 		<input type="text" placeholder="new rabbit name" bind:value={newName} class="text-black" />
 		{#if wrongRabbitName}
-			<div role="alert" class="mt-4 alert alert-error">
+			<div role="alert" class="alert alert-error mt-4">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					class="h-6 w-6 shrink-0 stroke-current"
